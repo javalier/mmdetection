@@ -12,11 +12,12 @@ model = dict(
         norm_cfg=dict(type='BN'),
         init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet18')),
     neck=dict(
-        type='CTResNetNeck',
-        in_channel=512,
-        num_deconv_filters=(256, 128, 64),
-        num_deconv_kernels=(4, 4, 4),
-        use_dcn=True),
+        type='DilatedEncoder',
+        in_channels=512,
+        out_channels=64,
+        block_mid_channels=128,
+        num_residual_blocks=4,
+        block_dilations=[2, 4, 6, 8]),
     bbox_head=dict(
         type='CenterNetHead',
         num_classes=80,
